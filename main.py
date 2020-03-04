@@ -32,6 +32,14 @@ class Item(Resource):
         return '', 204
 
 
+    def put(self, name):
+        data = request.get_json()
+        item = next(filter(lambda x: x['name'] != name, items), None)
+        if item:
+            item.update(data)
+        return item
+
+
 class ItemList(Resource):
     def get(self):
         return {'items': items}
